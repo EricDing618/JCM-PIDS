@@ -52,6 +52,9 @@ function processCustomMessage(msg, pids) {
     msg = msg.replace(/\{station\}/g, stationName);
     return msg;
 }
+
+var welcomeText = getRandomWelcome(stationName);
+
 // ===== 主渲染函数 =====
 function render(ctx, state, pids) {
     var screenWidth = pids.width;
@@ -74,7 +77,6 @@ function render(ctx, state, pids) {
     // ===== 分支逻辑 =====
     if (hasTrain && waitTime > WAIT_THRESHOLD) {
         // 情况A：等待时间 > 阈值，只显示红色欢迎语（第二行）
-        var welcomeText = getRandomWelcome(stationName);
         
         Text.create("Welcome message")
             .text(welcomeText)
