@@ -47,13 +47,13 @@ function processCustomMessage(msg, pids) {
     if (!msg) return "";
     
     var station = pids.station();
-    var stationName = station ? station.getName() : "本站";
+
     // 同样使用 JavaScript 正则，{station} 中的大括号转义
     msg = msg.replace(/\{station\}/g, stationName);
     return msg;
 }
 
-var welcomeText = getRandomWelcome(stationName);
+
 
 // ===== 主渲染函数 =====
 function render(ctx, state, pids) {
@@ -79,7 +79,7 @@ function render(ctx, state, pids) {
         // 情况A：等待时间 > 阈值，只显示红色欢迎语（第二行）
         
         Text.create("Welcome message")
-            .text(welcomeText)
+            .text(state.welcomeText)
             .color(0xFF0000)                 // 红色
             .bold()
             .centerAlign()
@@ -156,6 +156,9 @@ function render(ctx, state, pids) {
 // ===== 生命周期函数（可选）=====
 function create(ctx, state, pids) {
     print("国铁站台PIDS已创建");
+    var station = pids.station();
+    var stationName = station ? station.getName() : "本站";
+    state.welcomeText = getRandomWelcome(stationName);
 }
 
 function dispose(ctx, state, pids) {
